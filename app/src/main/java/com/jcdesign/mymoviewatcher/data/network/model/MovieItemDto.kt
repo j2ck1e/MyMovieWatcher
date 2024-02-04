@@ -1,14 +1,14 @@
-package com.jcdesign.mymoviewatcher.domain
+package com.jcdesign.mymoviewatcher.data.network.model
 
-data class MovieItem(
+data class MovieItemDto(
     val completed: Boolean,
-    val countries: List<Country>,
+    val countries: List<CountryDto>,
     val coverUrl: String,
     val description: String,
     val editorAnnotation: String,
     val endYear: Int,
     val filmLength: Int,
-    val genres: List<Genre>,
+    val genres: List<GenreDto>,
     val has3D: Boolean,
     val hasImax: Boolean,
     val imdbId: String,
