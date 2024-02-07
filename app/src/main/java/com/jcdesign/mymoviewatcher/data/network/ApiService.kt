@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.jcdesign.mymoviewatcher.BuildConfig
 import com.jcdesign.mymoviewatcher.data.datasource.RemoteDataSource
 import com.jcdesign.mymoviewatcher.data.datasource.RemoteDataSourceImpl
+import com.jcdesign.mymoviewatcher.data.network.model.FilmDto
 import com.jcdesign.mymoviewatcher.data.network.model.MovieItemDto
 import com.jcdesign.mymoviewatcher.data.network.model.SearchMoviesDto
 import okhttp3.OkHttpClient
@@ -22,12 +23,12 @@ interface ApiService {
     suspend fun getListMovie(
         @Query("keyword") word: String,
         @Query("page") page: String,
-    ): LiveData<SearchMoviesDto>
+    ): SearchMoviesDto
 
     @GET("/api/v2.2/films/{id}")
     suspend fun getMovieById(
         @Path("id") movieId: String
-    ): LiveData<MovieItemDto>
+    ): MovieItemDto
 
 
 

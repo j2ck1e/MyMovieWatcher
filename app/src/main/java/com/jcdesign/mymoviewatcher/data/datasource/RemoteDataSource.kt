@@ -13,10 +13,10 @@ interface RemoteDataSource {
     suspend fun getListMovie(
         word: String,
         page: String,
-    ): LiveData<SearchMoviesDto>
+    ): SearchMoviesDto
 
 
     suspend fun getMovieById(
         movieId: String
-    ): LiveData<MovieItemDto>
+    ): MovieItemDto
 }
