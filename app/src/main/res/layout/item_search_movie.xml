@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="4dp"
@@ -30,12 +31,13 @@
 
         <TextView
             android:id="@+id/movie_ru_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:textSize="16sp"
             android:text="Movie Name"
+            android:textSize="16sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/movie_rating"
             app:layout_constraintStart_toEndOf="@+id/iv_poster"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,9 +47,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
+            android:text="7.9"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:text="7.9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/movie_ru_name" />
 
@@ -56,44 +58,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textSize="12sp"
             android:text="Movie Name"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/movie_ru_name"
             app:layout_constraintTop_toBottomOf="@id/movie_ru_name" />
 
         <TextView
             android:id="@+id/movie_year"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textSize="12sp"
             android:text="2019"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/movie_ru_name"
             app:layout_constraintStart_toStartOf="@+id/movie_ru_name"
             app:layout_constraintTop_toBottomOf="@id/movie_en_name" />
-
-        <ImageButton
-            android:id="@id/play_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:background="@color/white"
-            android:src="@drawable/play"
-            app:layout_constraintTop_toBottomOf="@id/movie_year"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/movie_year" />
-
-        <TextView
-            android:id="@+id/play_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:textSize="12sp"
-            android:text="Смотреть на Flicksbar"
-            android:textColor="#FD5F01"
-            app:layout_constraintStart_toEndOf="@+id/play_btn"
-            app:layout_constraintTop_toTopOf="@id/play_btn"
-            app:layout_constraintBottom_toBottomOf="@id/play_btn"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

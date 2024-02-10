@@ -1,5 +1,6 @@
 package com.jcdesign.mymoviewatcher.data.mapper
 
+import android.media.Rating
 import com.jcdesign.mymoviewatcher.data.network.model.CountryDto
 import com.jcdesign.mymoviewatcher.data.network.model.FilmDto
 import com.jcdesign.mymoviewatcher.data.network.model.GenreDto
@@ -49,7 +50,7 @@ class Mapper {
         nameRu = filmDto.nameRu,
         posterUrl = filmDto.posterUrl,
         posterUrlPreview = filmDto.posterUrlPreview,
-        rating = filmDto.rating,
+        rating = isNull(filmDto.rating),
         ratingVoteCount = filmDto.ratingVoteCount,
         type = filmDto.type,
         year = filmDto.year
@@ -80,6 +81,9 @@ class Mapper {
     private fun toFlicksbarLink(link: String): String {
         return link.replace("www.kinopoisk.ru", "www.sspoisk.ru")
     }
+
+
+    private fun isNull(rating: String) = if(rating == "null") "n/a" else rating
 
 
 }

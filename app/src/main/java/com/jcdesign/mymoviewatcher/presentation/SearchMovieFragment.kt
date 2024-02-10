@@ -2,21 +2,22 @@ package com.jcdesign.mymoviewatcher.presentation
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.jcdesign.mymoviewatcher.R
-import com.jcdesign.mymoviewatcher.databinding.ActivityMainBinding
+import androidx.navigation.fragment.findNavController
 import com.jcdesign.mymoviewatcher.databinding.FragmentSearchMovieBinding
+import com.jcdesign.mymoviewatcher.domain.Film
 import com.jcdesign.mymoviewatcher.presentation.adapter.MovieSearchAdapter
 
 
 class SearchMovieFragment : Fragment() {
 
-    private lateinit var viewModel: MyViewModel
+    private lateinit var viewModel: SearchMovieViewModel
     private lateinit var adapter: MovieSearchAdapter
     private lateinit var binding: FragmentSearchMovieBinding
 
@@ -25,7 +26,7 @@ class SearchMovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSearchMovieBinding.inflate(layoutInflater, container, false)
+        binding = FragmentSearchMovieBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -33,17 +34,34 @@ class SearchMovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModelFactory = MyViewModelFactory()
-        viewModel = ViewModelProvider(this, viewModelFactory)[MyViewModel::class.java]
+//        val viewModelFactory = MyViewModelFactory()
+        viewModel = ViewModelProvider(this)[SearchMovieViewModel::class.java]
         adapter = MovieSearchAdapter()
         binding.rvActivity.adapter = adapter
 
-        viewModel.getMovieList("джеки", "2")
+        binding.etSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(keyword: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(keyword: String?): Boolean {
+                keyword?.let { viewModel.getMovieList(it, "1") }
+                return true
+            }
+
+        })
+
 
         viewModel.searchData.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.films)
-            Log.d("MyTAG", "searchData: $it")
         })
+
+        adapter.onItemClickListener = object : MovieSearchAdapter.OnItemClickListener{
+            override fun onMovieItemClick(movieItem: Film) {
+                findNavController().navigate(SearchMovieFragmentDirections
+                    .actionSearchMovieFragmentToMovieItemFragment(movieItem.filmId.toString()))
+            }
+        }
     }
 
 }

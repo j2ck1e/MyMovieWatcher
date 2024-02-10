@@ -9,5 +9,22 @@
         android:id="@+id/searchMovieFragment"
         android:name="com.jcdesign.mymoviewatcher.presentation.SearchMovieFragment"
         android:label="fragment_search_movie"
-        tools:layout="@layout/fragment_search_movie" />
+        tools:layout="@layout/fragment_search_movie" >
+        <action
+            android:id="@+id/action_searchMovieFragment_to_movieItemFragment"
+            app:destination="@id/movieItemFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieItemFragment"
+        android:name="com.jcdesign.mymoviewatcher.presentation.MovieItemFragment"
+        android:label="fragment_movie_item"
+        tools:layout="@layout/fragment_movie_item" >
+        <argument
+            android:name="movie_id"
+            app:argType="string" />
+    </fragment>
 </navigation>
