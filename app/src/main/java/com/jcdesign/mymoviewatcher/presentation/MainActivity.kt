@@ -16,24 +16,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-//        val viewModelFactory = MyViewModelFactory()
-//        viewModel = ViewModelProvider(this, viewModelFactory)[MyViewModel::class.java]
-//        adapter = MovieSearchAdapter()
-//        binding.rvActivity.adapter = adapter
-//
-//        viewModel.getMovieItem("301")
-//        viewModel.getMovieList("джеки", "2")
-//
-//        viewModel.data.observe(this, Observer {
-//
-//            Log.d("MyTAG", "data: $it")
-//        })
-//
-//        viewModel.searchData.observe(this, Observer {
-//            adapter.submitList(it.films)
-//            Log.d("MyTAG", "searchData: $it")
-//        })
-
     }
+
 }
