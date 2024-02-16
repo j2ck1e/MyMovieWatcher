@@ -1,6 +1,8 @@
 package com.jcdesign.mymoviewatcher.domain
 
-class GetMovieItemUseCase(
+import javax.inject.Inject
+
+class GetMovieItemUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
     suspend operator fun invoke(itemId: String) =

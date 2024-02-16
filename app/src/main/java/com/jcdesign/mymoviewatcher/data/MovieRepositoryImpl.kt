@@ -6,33 +6,26 @@ import com.jcdesign.mymoviewatcher.domain.MovieItem
 import com.jcdesign.mymoviewatcher.domain.MovieRepository
 import com.jcdesign.mymoviewatcher.domain.SearchMovies
 import java.lang.Exception
+import javax.inject.Inject
 
-class MovieRepositoryImpl(
-
+class MovieRepositoryImpl @Inject constructor(
+    private val mapper: Mapper,
+    private val remoteDataSource: RemoteDataSourceImpl
 ) : MovieRepository {
-
-    private val remoteDataSource = RemoteDataSourceImpl()
-    private val mapper = Mapper()
 
 
     override suspend fun getMovieItem(itemId: String): MovieItem {
-        try {
-            val itemDto = remoteDataSource.getMovieById(itemId)
-            return mapper.mapMovieItemDtoToMovieItemEntity(itemDto)
-        } catch (_: Exception){
 
-        }
-        throw RuntimeException("Internet has not been available")
+        val itemDto = remoteDataSource.getMovieById(itemId)
+        return mapper.mapMovieItemDtoToMovieItemEntity(itemDto)
+
     }
 
     override suspend fun getMovieList(keyword: String, page: String): SearchMovies {
-        try {
-            val moviesDto = remoteDataSource.getListMovie(keyword, page)
-            return mapper.mapSearchMoviesDtoToSearchMoviesEntity(moviesDto)
-        } catch (_: Exception){
 
-        }
-        throw RuntimeException("Internet has not been available")
+        val moviesDto = remoteDataSource.getListMovie(keyword, page)
+        return mapper.mapSearchMoviesDtoToSearchMoviesEntity(moviesDto)
+
     }
 
 

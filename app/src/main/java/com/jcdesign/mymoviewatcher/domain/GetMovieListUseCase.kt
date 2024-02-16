@@ -1,6 +1,8 @@
 package com.jcdesign.mymoviewatcher.domain
 
-class GetMovieListUseCase(
+import javax.inject.Inject
+
+class GetMovieListUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
 
