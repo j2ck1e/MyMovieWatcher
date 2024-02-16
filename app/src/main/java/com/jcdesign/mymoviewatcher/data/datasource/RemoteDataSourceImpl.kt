@@ -6,8 +6,9 @@ import com.jcdesign.mymoviewatcher.data.network.ApiService
 import com.jcdesign.mymoviewatcher.data.network.model.FilmDto
 import com.jcdesign.mymoviewatcher.data.network.model.MovieItemDto
 import com.jcdesign.mymoviewatcher.data.network.model.SearchMoviesDto
+import javax.inject.Inject
 
-class RemoteDataSourceImpl(
+class RemoteDataSourceImpl @Inject constructor(
 
 ) : RemoteDataSource {
 

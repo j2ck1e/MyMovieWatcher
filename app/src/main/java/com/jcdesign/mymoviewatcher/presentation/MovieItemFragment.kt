@@ -1,5 +1,6 @@
 package com.jcdesign.mymoviewatcher.presentation
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,13 +18,25 @@ import com.jcdesign.mymoviewatcher.databinding.FragmentMovieItemBinding
 import com.jcdesign.mymoviewatcher.domain.Country
 import com.jcdesign.mymoviewatcher.domain.Genre
 import com.jcdesign.mymoviewatcher.domain.MovieItem
+import javax.inject.Inject
 
 
 class MovieItemFragment : Fragment() {
 
+    @Inject
+    lateinit var viewModelFactory: MyViewModelFactory
     private lateinit var viewModel: MovieItemViewModel
     private lateinit var binding: FragmentMovieItemBinding
     private val args by navArgs<MovieItemFragmentArgs>()
+
+    private val component by lazy {
+        (requireActivity().application as MovieApp).component
+    }
+
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
+    }
 
 
     override fun onCreateView(
@@ -40,7 +53,7 @@ class MovieItemFragment : Fragment() {
 
         onBackPressed()
 
-        viewModel = ViewModelProvider(this)[MovieItemViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[MovieItemViewModel::class.java]
         viewModel.getMovieItem(args.movieId)
         viewModel.data.observe(viewLifecycleOwner, Observer { it ->
             bindUI(binding, it)

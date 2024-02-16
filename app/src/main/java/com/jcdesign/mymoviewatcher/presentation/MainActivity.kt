@@ -7,8 +7,6 @@ import com.jcdesign.mymoviewatcher.presentation.adapter.MovieSearchAdapter
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: SearchMovieViewModel
-    private lateinit var adapter: MovieSearchAdapter
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

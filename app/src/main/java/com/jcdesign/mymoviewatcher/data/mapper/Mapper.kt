@@ -11,8 +11,9 @@ import com.jcdesign.mymoviewatcher.domain.Film
 import com.jcdesign.mymoviewatcher.domain.Genre
 import com.jcdesign.mymoviewatcher.domain.MovieItem
 import com.jcdesign.mymoviewatcher.domain.SearchMovies
+import javax.inject.Inject
 
-class Mapper {
+class Mapper @Inject constructor(){
 
     fun mapSearchMoviesDtoToSearchMoviesEntity(searchMoviesDto: SearchMoviesDto) = SearchMovies(
         films = mapListFilmDtoToListFilmEntity(searchMoviesDto.films),

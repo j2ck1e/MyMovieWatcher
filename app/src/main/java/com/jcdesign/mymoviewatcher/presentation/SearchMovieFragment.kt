@@ -1,5 +1,6 @@
 package com.jcdesign.mymoviewatcher.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,13 +14,25 @@ import androidx.navigation.fragment.findNavController
 import com.jcdesign.mymoviewatcher.databinding.FragmentSearchMovieBinding
 import com.jcdesign.mymoviewatcher.domain.Film
 import com.jcdesign.mymoviewatcher.presentation.adapter.MovieSearchAdapter
+import javax.inject.Inject
 
 
 class SearchMovieFragment : Fragment() {
 
+    @Inject
+    lateinit var viewModelFactory: MyViewModelFactory
     private lateinit var viewModel: SearchMovieViewModel
     private lateinit var adapter: MovieSearchAdapter
     private lateinit var binding: FragmentSearchMovieBinding
+
+    private val component by lazy {
+        (requireActivity().application as MovieApp).component
+    }
+
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
+    }
 
 
     override fun onCreateView(
@@ -35,7 +48,7 @@ class SearchMovieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 //        val viewModelFactory = MyViewModelFactory()
-        viewModel = ViewModelProvider(this)[SearchMovieViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[SearchMovieViewModel::class.java]
         adapter = MovieSearchAdapter()
         binding.rvActivity.adapter = adapter
 
@@ -56,10 +69,12 @@ class SearchMovieFragment : Fragment() {
             adapter.submitList(it.films)
         })
 
-        adapter.onItemClickListener = object : MovieSearchAdapter.OnItemClickListener{
+        adapter.onItemClickListener = object : MovieSearchAdapter.OnItemClickListener {
             override fun onMovieItemClick(movieItem: Film) {
-                findNavController().navigate(SearchMovieFragmentDirections
-                    .actionSearchMovieFragmentToMovieItemFragment(movieItem.filmId.toString()))
+                findNavController().navigate(
+                    SearchMovieFragmentDirections
+                        .actionSearchMovieFragmentToMovieItemFragment(movieItem.filmId.toString())
+                )
             }
         }
     }

@@ -10,20 +10,16 @@ import com.jcdesign.mymoviewatcher.domain.GetMovieListUseCase
 import com.jcdesign.mymoviewatcher.domain.MovieItem
 import com.jcdesign.mymoviewatcher.domain.SearchMovies
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchMovieViewModel(
+class SearchMovieViewModel @Inject constructor(
+    private val getMovieListUseCase: GetMovieListUseCase
 ) : ViewModel() {
-
-    val repository = MovieRepositoryImpl()
-
-    private val getMovieListUseCase = GetMovieListUseCase(repository)
-
 
 
     private var _searchData = MutableLiveData<SearchMovies>()
     val searchData: LiveData<SearchMovies>
         get() = _searchData
-
 
 
     fun getMovieList(keyword: String, page: String) = viewModelScope.launch {
