@@ -1,11 +1,9 @@
 package com.jcdesign.mymoviewatcher.domain
 
-import androidx.lifecycle.LiveData
-
 class GetMovieItemUseCase(
-    private val movieListRepository: MovieListRepository
+    private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke(movieItemId: String): LiveData<MovieItem> {
-        return movieListRepository.getMovieItem(movieItemId)
-    }
+    suspend operator fun invoke(itemId: String) =
+        movieRepository.getMovieItem(itemId)
+
 }

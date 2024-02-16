@@ -2,23 +2,20 @@ package com.jcdesign.mymoviewatcher.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import com.jcdesign.mymoviewatcher.R
-import com.jcdesign.mymoviewatcher.data.MovieListRepositoryImpl
-import com.jcdesign.mymoviewatcher.data.datasource.RemoteDataSource
-import com.jcdesign.mymoviewatcher.data.datasource.RemoteDataSourceImpl
-import com.jcdesign.mymoviewatcher.data.mapper.Mapper
-import com.jcdesign.mymoviewatcher.data.network.ApiService
-import com.jcdesign.mymoviewatcher.domain.GetMovieListUseCase
-import com.jcdesign.mymoviewatcher.domain.MovieListRepository
-import kotlinx.coroutines.launch
+import com.jcdesign.mymoviewatcher.databinding.ActivityMainBinding
+import com.jcdesign.mymoviewatcher.presentation.adapter.MovieSearchAdapter
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var viewModel: SearchMovieViewModel
+    private lateinit var adapter: MovieSearchAdapter
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
     }
+
 }

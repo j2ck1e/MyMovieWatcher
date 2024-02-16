@@ -1,5 +1,5 @@
 package com.jcdesign.mymoviewatcher.domain
 
 data class Country(
-    val country: String
+    val country: String? = ""
 )

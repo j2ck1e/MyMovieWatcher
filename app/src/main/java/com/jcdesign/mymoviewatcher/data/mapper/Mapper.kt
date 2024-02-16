@@ -1,5 +1,6 @@
 package com.jcdesign.mymoviewatcher.data.mapper
 
+import android.media.Rating
 import com.jcdesign.mymoviewatcher.data.network.model.CountryDto
 import com.jcdesign.mymoviewatcher.data.network.model.FilmDto
 import com.jcdesign.mymoviewatcher.data.network.model.GenreDto
@@ -19,54 +20,22 @@ class Mapper {
         pagesCount = searchMoviesDto.pagesCount,
         searchFilmsCountResult = searchMoviesDto.searchFilmsCountResult,
 
-    )
+        )
 
     fun mapMovieItemDtoToMovieItemEntity(movieItemDto: MovieItemDto) = MovieItem(
-        completed = movieItemDto.completed,
         countries = mapListCountryDtoToListCountryEntity(movieItemDto.countries),
-        coverUrl = movieItemDto.coverUrl,
         description = movieItemDto.description,
-        editorAnnotation = movieItemDto.editorAnnotation,
-        endYear = movieItemDto.endYear,
-        filmLength = movieItemDto.filmLength,
+        filmLength = movieItemDto.filmLength.toString(),
         genres = mapListGenreDtoToListGenreEntity(movieItemDto.genres),
-        has3D = movieItemDto.has3D,
-        hasImax = movieItemDto.hasImax,
-        imdbId = movieItemDto.imdbId,
-        isTicketsAvailable = movieItemDto.isTicketsAvailable,
-        kinopoiskHDId = movieItemDto.kinopoiskHDId,
-        kinopoiskId = movieItemDto.kinopoiskId,
-        lastSync = movieItemDto.lastSync,
-        logoUrl = movieItemDto.logoUrl,
         nameEn = movieItemDto.nameEn,
-        nameOriginal = movieItemDto.nameOriginal,
         nameRu = movieItemDto.nameRu,
         posterUrl = movieItemDto.posterUrl,
         posterUrlPreview = movieItemDto.posterUrlPreview,
-        productionStatus = movieItemDto.productionStatus,
-        ratingAgeLimits = movieItemDto.ratingAgeLimits,
-        ratingAwait = movieItemDto.ratingAwait,
-        ratingAwaitCount = movieItemDto.ratingAwaitCount,
-        ratingFilmCritics = movieItemDto.ratingFilmCritics,
-        ratingFilmCriticsVoteCount = movieItemDto.ratingRfCriticsVoteCount,
-        ratingGoodReview = movieItemDto.ratingGoodReview,
-        ratingGoodReviewVoteCount = movieItemDto.ratingGoodReviewVoteCount,
-        ratingImdb = movieItemDto.ratingImdb,
-        ratingImdbVoteCount = movieItemDto.ratingImdbVoteCount,
-        ratingKinopoisk = movieItemDto.ratingKinopoisk,
-        ratingKinopoiskVoteCount = movieItemDto.ratingKinopoiskVoteCount,
-        ratingMpaa = movieItemDto.ratingMpaa,
-        ratingRfCritics = movieItemDto.ratingRfCritics,
-        ratingRfCriticsVoteCount = movieItemDto.ratingRfCriticsVoteCount,
-        reviewsCount = movieItemDto.reviewsCount,
-        serial = movieItemDto.serial,
-        shortDescription = movieItemDto.shortDescription,
-        shortFilm = movieItemDto.shortFilm,
-        slogan = movieItemDto.slogan,
-        startYear = movieItemDto.startYear,
         type = movieItemDto.type,
-        webUrl = movieItemDto.webUrl,
-        year = movieItemDto.year
+        year = movieItemDto.year.toString(),
+        filmId = movieItemDto.kinopoiskId,
+        webUrl = toFlicksbarLink(movieItemDto.webUrl),
+        rating = movieItemDto.ratingKinopoisk.toString()
     )
 
 
@@ -81,11 +50,12 @@ class Mapper {
         nameRu = filmDto.nameRu,
         posterUrl = filmDto.posterUrl,
         posterUrlPreview = filmDto.posterUrlPreview,
-        rating = filmDto.rating,
+        rating = isNull(filmDto.rating),
         ratingVoteCount = filmDto.ratingVoteCount,
         type = filmDto.type,
         year = filmDto.year
     )
+
     private fun mapListFilmDtoToListFilmEntity(list: List<FilmDto>) = list.map {
         mapFilmDtoToFilmEntity(it)
     }
@@ -94,6 +64,7 @@ class Mapper {
     private fun mapCountryDtoToCountryEntity(countryDto: CountryDto) = Country(
         country = countryDto.country
     )
+
     private fun mapListCountryDtoToListCountryEntity(list: List<CountryDto>) = list.map {
         mapCountryDtoToCountryEntity(it)
     }
@@ -102,10 +73,17 @@ class Mapper {
     private fun mapGenreDtoToGenreEntity(genreDto: GenreDto) = Genre(
         genre = genreDto.genre
     )
+
     private fun mapListGenreDtoToListGenreEntity(list: List<GenreDto>) = list.map {
         mapGenreDtoToGenreEntity(it)
     }
 
+    private fun toFlicksbarLink(link: String): String {
+        return link.replace("www.kinopoisk.ru", "www.sspoisk.ru")
+    }
+
+
+    private fun isNull(rating: String) = if(rating == "null") "n/a" else rating
 
 
 }
