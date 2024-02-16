@@ -1,8 +1,10 @@
 package com.jcdesign.mymoviewatcher.domain
 
+import androidx.lifecycle.LiveData
+
 interface MovieListRepository {
 
-    fun getMovieList(): List<MovieItem>
+    suspend fun getMovieList(keyword: String, page: String): LiveData<SearchMovies>
 
-    fun getMovieItem(movieItemId: Int): MovieItem
+    suspend fun getMovieItem(movieItemId: String): LiveData<MovieItem>
 }
