@@ -3,6 +3,7 @@ package com.jcdesign.mymoviewatcher.presentation
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -18,6 +20,7 @@ import com.jcdesign.mymoviewatcher.databinding.FragmentMovieItemBinding
 import com.jcdesign.mymoviewatcher.domain.Country
 import com.jcdesign.mymoviewatcher.domain.Genre
 import com.jcdesign.mymoviewatcher.domain.MovieItem
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -55,9 +58,12 @@ class MovieItemFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, viewModelFactory)[MovieItemViewModel::class.java]
         viewModel.getMovieItem(args.movieId)
-        viewModel.data.observe(viewLifecycleOwner, Observer { it ->
-            bindUI(binding, it)
-        })
+
+        lifecycleScope.launch{
+            viewModel.data.collect {
+                bindUI(binding, it)
+            }
+        }
 
     }
 
@@ -80,6 +86,7 @@ class MovieItemFragment : Fragment() {
 
             btnPlayMovie.setOnClickListener {
                 val chromeIntent = CustomTabsIntent.Builder().build()
+                Log.d("MyTAG", item.webUrl)
                 chromeIntent.launchUrl(requireContext(), Uri.parse(item.webUrl))
             }
         }

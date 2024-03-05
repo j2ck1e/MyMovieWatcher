@@ -10,10 +10,12 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.jcdesign.mymoviewatcher.databinding.FragmentSearchMovieBinding
 import com.jcdesign.mymoviewatcher.domain.Film
 import com.jcdesign.mymoviewatcher.presentation.adapter.MovieSearchAdapter
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -47,7 +49,7 @@ class SearchMovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val viewModelFactory = MyViewModelFactory()
+
         viewModel = ViewModelProvider(this, viewModelFactory)[SearchMovieViewModel::class.java]
         adapter = MovieSearchAdapter()
         binding.rvActivity.adapter = adapter
@@ -65,9 +67,11 @@ class SearchMovieFragment : Fragment() {
         })
 
 
-        viewModel.searchData.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it.films)
-        })
+        lifecycleScope.launch {
+            viewModel.searchData.collect {
+                adapter.submitList(it.films)
+            }
+        }
 
         adapter.onItemClickListener = object : MovieSearchAdapter.OnItemClickListener {
             override fun onMovieItemClick(movieItem: Film) {
